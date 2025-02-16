@@ -1,0 +1,21 @@
+<div class="flex justify-center items-center gap-2 mt-4">
+    <!-- Button Previous -->
+    <button class="pagination-btn" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+      ‹
+    </button>
+  
+    <!-- List page -->
+    <button 
+      *ngFor="let page of getPages()" 
+      class="pagination-btn" 
+      [class.active]="page === currentPage"
+      (click)="changePage(page)">
+      {{ page }}
+    </button>
+  
+    <!-- Button Next -->
+    <button class="pagination-btn" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      ›
+    </button>
+  </div>
+  

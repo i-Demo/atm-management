@@ -1,0 +1,163 @@
+<div class="p-4 bg-white rounded-lg border border-palette-gray-200 shadow-sm">
+    <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <p class="text-palette-gray-900 text-base font-semibold">ATM Management</p>
+            <button (click)="handleAddATM()" class="px-2 py-1 rounded-lg border border-blue-200 text-blue-600 hover:text-blue-500">Add +</button>
+        </div>
+        <input 
+            type="text" 
+            placeholder="Search ATM..." 
+            [(ngModel)]="searchQuery"
+            (input)="searchATM()"
+            class="p-2 rounded-lg text-black border border-gray-400"
+        >
+    </div>
+
+    <!-- FORM EDIT/ADD -->
+    <div *ngIf="isEditing" class="fixed top-0 right-0 bottom-0 left-0 z-[99] flex justify-center items-center bg-black bg-opacity-40 h-screen !overflow-hidden">
+        <div class="w-[544px] h-auto max-h-[90vh] p-4 rounded-xl border border-palette-gray-200 popup-shadow bg-white relative overflow-auto">
+            <p class="text-lg font-semibold mb-2">{{ selectedATM ? 'Edit ATM' : 'Add ATM' }}</p>
+            
+            <form [formGroup]="atmForm">
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- ATM Name -->
+                    <div>
+                        <input type="text" placeholder="ATM Name" class="p-2 border rounded w-full" formControlName="name">
+                        <p class="text-red-500 text-sm" *ngIf="atmForm.controls['name'].touched && atmForm.controls['name'].errors?.['required']">
+                            ATM Name is required
+                        </p>
+                    </div>
+
+                    <!-- Manufacturer -->
+                    <div>
+                        <input type="text" placeholder="Manufacturer" class="p-2 border rounded w-full" formControlName="manufacturer">
+                        <p class="text-red-500 text-sm" *ngIf="atmForm.controls['manufacturer'].touched && atmForm.controls['manufacturer'].errors?.['required']">
+                            Manufacturer is required
+                        </p>
+                    </div>
+
+                    <!-- Type -->
+                    <div>
+                        <input type="text" placeholder="Type" class="p-2 border rounded w-full" formControlName="type">
+                        <p class="text-red-500 text-sm" *ngIf="atmForm.controls['type'].touched && atmForm.controls['type'].errors?.['required']">
+                            Type is required
+                        </p>
+                    </div>
+
+                    <!-- Serial Number -->
+                    <div>
+                        <input type="text" placeholder="Serial Number" class="p-2 border rounded w-full" formControlName="serial_number">
+                        <p class="text-red-500 text-sm" *ngIf="atmForm.controls['serial_number'].touched">
+                            <span *ngIf="atmForm.controls['serial_number'].errors?.['required']">Serial Number is required</span>
+                            <span *ngIf="atmForm.controls['serial_number'].errors?.['minlength']">Serial Number must be at least 6 characters</span>
+                        </p>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="col-span-2">
+                        <input type="text" placeholder="Image URL" class="p-2 border rounded w-full" formControlName="image">
+                        <p class="text-red-500 text-sm" *ngIf="atmForm.controls['image'].touched">
+                            <span *ngIf="atmForm.controls['image'].errors?.['required']">Image URL is required</span>
+                            <span *ngIf="atmForm.controls['image'].errors?.['pattern']">Invalid image URL (must be .png, .jpg, .jpeg, .gif)</span>
+                        </p>
+                    </div>
+                </div>
+    
+                <div class="mt-4 flex justify-end gap-2">
+                    <button (click)="cancelEdit()" type="button" class="p-2 bg-gray-400 hover:bg-gray-300 text-white rounded">Cancel</button>
+                    <button (click)="saveATM()" type="button" 
+                        class="p-2 min-w-[80px] bg-blue-500 hover:bg-blue-400 text-white rounded">
+                        <ng-container *ngIf="isCallAPI">
+                            Loading...
+                        </ng-container>
+                        <ng-container *ngIf="!isCallAPI">
+                            Save
+                        </ng-container>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="relative overflow-x-auto !mt-2 border !rounded-lg border-palette-gray-200 !font-medium">
+        <table class="min-w-full">
+            <thead class="text-sm leading-[39.5px] text-palette-gray-700 !rounded-t-lg bg-palette-gray-100">
+                <tr class="border-b bg-gray-100">
+                    <td class="p-1 text-center rounded-tl-lg sticky left-0 z-10 bg-palette-gray-100 whitespace-nowrap">ATM Name</td>
+                    <td class="p-1 text-center whitespace-nowrap">Manufacturer</td>
+                    <td class="p-1 text-center whitespace-nowrap">Type</td>
+                    <td class="p-1 text-center whitespace-nowrap">Serial Number</td>
+                    <td class="p-1 text-center whitespace-nowrap">Image</td>
+                    <td class="p-1 text-center rounded-tr-lg whitespace-nowrap">Actions</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Skeleton -->
+                <ng-container *ngIf="isLoading">
+                    <tr *ngFor="let i of [1,2,3,4,5]" class="animate-pulse">
+                        <td class="p-2 text-center sticky left-0 z-10 bg-white">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        </td>
+                        <td class="p-2 text-center">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        </td>
+                        <td class="p-2 text-center">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        </td>
+                        <td class="p-2 text-center">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        </td>
+                        <td class="p-2 text-center">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        </td>
+                        <td class="p-2 text-center">
+                            <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        </td>
+                    </tr>
+                </ng-container>
+
+                <!-- Data Table -->
+                <ng-container *ngIf="!isLoading">
+                    <tr *ngFor="let item of listATM; let last = last" class="text-xs leading-5 text-palette-gray-700" [class.border-b]="!last">
+                        <td class="p-1 text-center sticky left-0 z-10 bg-white whitespace-nowrap">
+                            <p class="uppercase font-medium">{{ item.name }}</p>
+                        </td>
+                        <td class="p-1 text-center whitespace-nowrap">
+                            <p class="uppercase font-medium">{{ item.manufacturer }}</p>
+                        </td>
+                        <td class="p-1 text-center whitespace-nowrap">
+                            <p class="uppercase font-medium">{{ item.type }}</p>
+                        </td>
+                        <td class="p-1 text-center whitespace-nowrap">
+                            <p class="uppercase font-medium">{{ item.serial_number }}</p>
+                        </td>
+                        <td class="p-1 text-center whitespace-nowrap">
+                            <p class="uppercase font-medium">{{ item.image }}</p>
+                        </td>
+                        <td class="p-1 text-center whitespace-nowrap">
+                            <button (click)="handleEditATM(item)" class="px-1 text-blue-600 hover:text-blue-500">Edit</button>
+                            <button (click)="handleDeleteATM(item)" class="px-1 text-red-600 hover:text-red-500">Delete</button>
+                        </td>
+                    </tr>
+                </ng-container>
+
+                <!-- No Item -->
+                <ng-container *ngIf="!isLoading && listATM.length === 0">
+                    <div class="!p-4">No Item</div>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="flex justify-end">
+        <app-pagination 
+            [totalItems]="totalItems" 
+            [itemsPerPage]="itemsPerPage" 
+            [currentPage]="currentPage"
+            (pageChange)="onPageChange($event)">
+        </app-pagination>
+    </div>
+</div>

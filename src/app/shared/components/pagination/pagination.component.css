@@ -1,0 +1,19 @@
+.pagination-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.pagination-btn:hover {
+  background: #f0f0f0;
+}
+.pagination-btn.active {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+}
+.pagination-btn:disabled {
+  background: #eee;
+  cursor: not-allowed;
+}
