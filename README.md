@@ -6,10 +6,12 @@ This project is a simple ATM management system built using **Angular**. It allow
 
 ## 🚀 Features  
 - View a list of ATMs  
-- Search ATMs by name  
+- Search ATMs by by name, manufacturer, type, or serial  
 - Add new ATM records  
 - Edit existing ATM details  
-- Delete ATM records  
+- Delete ATM records 
+- Skeleton
+- Implement error handling for failed API requests.
 - Form validation with error messages  
 
 ## 🛠️ Technologies Used  
