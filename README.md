@@ -1,59 +1,40 @@
-# AtmManagement
+# ATM Management System  
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
+## 📝 Introduction  
+This project is a simple ATM management system built using **Angular**. It allows users to view a list of ATMs, search, add, edit, and delete ATM records.  
+![image](https://github.com/user-attachments/assets/032f38b6-18ef-4096-8d0e-bc15d632196c)
 
-## Development server
+## 🚀 Features  
+- View a list of ATMs  
+- Search ATMs by name  
+- Add new ATM records  
+- Edit existing ATM details  
+- Delete ATM records  
+- Form validation with error messages  
 
-To start a local development server, run:
+## 🛠️ Technologies Used  
+- **Angular** (latest version)  
+- **TypeScript**  
+- **RxJS**  
+- **Tailwind CSS** (for styling)  
+- **MockAPI** (for API simulation)  
 
-```bash
-ng serve
-```
+## 📂 Guide to run project
+1. git clone https://github.com/i-Demo/atm-management
+cd ATM-Management
+2. npm install
+3. ng serve
+Then, open http://localhost:4200 in your browser.
+API Endpoints
+The project uses MockAPI for backend simulation.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Method	Endpoint	Description
+GET	/atms	Get all ATMs
+POST	/atms	Add a new ATM
+PUT	/atms/:id	Update an ATM
+DELETE	/atms/:id	Delete an ATM
 
-## Code scaffolding
+Thank you for the opportunity to work on this project. I look forward to your feedback!
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Best regards,
+Hồ Lê Hoài Vĩ
