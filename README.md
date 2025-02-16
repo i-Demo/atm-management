@@ -20,18 +20,24 @@ This project is a simple ATM management system built using **Angular**. It allow
 - **MockAPI** (for API simulation)  
 
 ## 📂 Guide to run project
-1. git clone https://github.com/i-Demo/atm-management
-cd ATM-Management
+1. + git clone https://github.com/i-Demo/atm-management
+ + cd ATM-Management
 2. npm install
 3. ng serve
+
 Then, open http://localhost:4200 in your browser.
+
 API Endpoints
 The project uses MockAPI for backend simulation.
 
 Method	Endpoint	Description
+
 GET	/atms	Get all ATMs
+
 POST	/atms	Add a new ATM
+
 PUT	/atms/:id	Update an ATM
+
 DELETE	/atms/:id	Delete an ATM
 
 Thank you for the opportunity to work on this project. I look forward to your feedback!
